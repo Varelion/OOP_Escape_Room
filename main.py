@@ -22,3 +22,8 @@ class GameObject:
 
 	def sniff(self):
 		return f"You sniff the {self.name}. \n {self.smell}\n"
+
+# Here we create an object from the class, feeding in the parameters, and then printing their fields' values.
+game_object = GameObject("Object_Name", "Some_Appearance", "Some_Feel", "Some_Smell")
+print(game_object.name)
+print(game_object.sniff())
