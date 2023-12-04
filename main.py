@@ -13,6 +13,8 @@ class GameObject:
 		self.smell = smell
 
 	def look(self):
+		# the 'f' at the beginning of the string denotes that it is a formater
+		# string, and {} allow for string literals.
 		return f"You look the {self.name}. \n {self.appearance}\n"
 
 	def feel(self):
