@@ -27,3 +27,27 @@ class GameObject:
 game_object = GameObject("Object_Name", "Some_Appearance", "Some_Feel", "Some_Smell")
 print(game_object.name)
 print(game_object.sniff())
+
+
+# Room initializer
+
+class Room:
+	escape_code = 0
+	game_objects = []
+
+	def __init__(self, escape_code, game_objects):
+		self.escape_code = escape_code
+		self.game_objects = game_objects
+
+	def check_code(self, code):
+		# if self.code == code:
+		# 	return True
+		# if self.code != code:
+		# 	return False
+		return self.code == code
+
+	def get_game_object_names(self, objects_in_game):
+		names = []
+		for object in objects_in_game:
+			names.append(object.name)
+		return names
