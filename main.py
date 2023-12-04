@@ -1,64 +1,58 @@
 class GameObject:
-	# Note: fields can be created with only the initializer function.
-	name = ""
-	appearance = ""
-	feel = ""
-	smell = ""
 
-# Every initializer needs to have this syntax, of __ and init and a 'self' parameter.
-	def __init__(self, name, appearance, feel, smell):
-		self.name = name
-		self.appearance = appearance
-		self.feel = feel
-		self.smell = smell
+    # Sets up an instance of GameObject with name, appearance, feel, and smell
+    def __init__(self, name, appearance, feel, smell):
+        self.name = name
+        self.appearance = appearance
+        self.feel = feel
+        self.smell = smell
 
-	def look(self):
-		# the 'f' at the beginning of the string denotes that it is a formater
-		# string, and {} allow for string literals.
-		return f"You look the {self.name}. \n {self.appearance}\n"
+    # Returns string describing object appearance
+    def look(self):
+        return f"You look at the {self.name}. {self.appearance}\n"
 
-	def feel(self):
-		return f"You feel the {self.name}. \n {self.feel}\n"
+    # Returns string describing object feel
+    def touch(self):
+        return f"You touch the {self.name}. {self.feel}\n"
 
-	def sniff(self):
-		return f"You sniff the {self.name}. \n {self.smell}\n"
+    # Returns string describing object smell
+    def sniff(self):
+        return f"You sniff the {self.name}. {self.smell}\n"
 
-# Here we create an object from the class, feeding in the parameters, and then printing their fields' values.
-game_object = GameObject("Object_Name", "Some_Appearance", "Some_Feel", "Some_Smell")
-print(game_object.name)
-print(game_object.sniff())
-
-
-# Room initializer
 
 class Room:
-	escape_code = 0
-	game_objects = []
+    # Our Room class has an escape code and a list of game objects as attributes/fields
+    escape_code = 0
+    game_objects = []
 
-	def __init__(self, escape_code, game_objects):
-		self.escape_code = escape_code
-		self.game_objects = game_objects
+    # Initializer
+    def __init__(self, escape_code, game_objects):
+        self.escape_code = escape_code
+        self.game_objects = game_objects
 
-	def check_code(self, code):
-		# if self.code == code:
-		# 	return True
-		# if self.code != code:
-		# 	return False
-		return self.code == code
+    # Returns whether the escape code of the room matches the code entered by the player
+    def check_code(self, code):
+        return self.escape_code == code
 
-	def get_game_object_names(self, objects_in_game):
-		names = []
-		for object in objects_in_game:
-			names.append(object.name)
-		return names
+    # Returns a list with all the names of the objects we have in our room
+    def get_game_object_names(self):
+        names = []
+        for object in self.game_objects:
+            names.append(object.name)
+        return names
+
 
 class Game:
-	def __init__(self, room):
-		self.attempts = 0
-		Objects = self.create_objects
-		self.room = Room(111,[])
 
-	def create_objects(self):
+    def __init__(self):
+        # Number of attempts the player has made on the escape code of the room
+        self.attempts = 0
+        objects = self.create_objects()
+        # Instantiating our room object
+        self.room = Room(731, objects)
+
+    # Returns a list with all the objects we're going to have in our escape room
+    def create_objects(self):
         return [
           GameObject(
             "Sweater",
@@ -86,3 +80,25 @@ class Game:
             "The battery compartment is open and empty.",
             "It smells of plastic."),
         ]
+
+    # For each turn, we want to present the prompt to the player
+    def take_turn(self):
+        prompt = self.get_room_prompt()
+        selection = input(prompt)
+        print(selection)
+
+    # Shows the option to enter the code or interact further with the objects in the room
+    def get_room_prompt(self):
+        prompt = "Enter the 3-digit lock code or choose an item to interact with:\n"
+        names = self.room.get_game_object_names()
+        index = 1
+        for name in names:
+            prompt += f"{index}. {name}\n"
+            index += 1
+        return prompt
+
+
+# Here we're creating an object of our Game class
+# and calling on its take_turn() method
+game = Game()
+game.take_turn()
